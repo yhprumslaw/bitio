@@ -9,7 +9,7 @@ var (
 	ExceededErr = errors.New("parameter out of range: cannot be greater than 64")
 )
 
-type BitReader struct {
+type Reader struct {
 	r io.Reader
 
 	n         uint8 // left for bitsCache, max is 7
@@ -20,14 +20,14 @@ type BitReader struct {
 	err   error
 }
 
-// NewBitReader create a new BitReader
-func NewReader(r io.Reader) *BitReader {
-	return &BitReader{
+// NewReader create a new Reader
+func NewReader(r io.Reader) *Reader {
+	return &Reader{
 		r: r,
 	}
 }
 
-func (r *BitReader) ReadBits(n uint8) (bits uint64, err error) {
+func (r *Reader) ReadBits(n uint8) (bits uint64, err error) {
 	if n > 64 {
 		return 0, ExceededErr
 	}
@@ -55,6 +55,6 @@ func (r *BitReader) ReadBits(n uint8) (bits uint64, err error) {
 
 }
 
-func (r *BitReader) ReadCount() uint64 {
+func (r *Reader) ReadCount() uint64 {
 	return r.count
 }
